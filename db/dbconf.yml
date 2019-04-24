@@ -1,0 +1,7 @@
+development:
+  driver: mysql
+  open: puntodamar:puntodamar@tcp(127.0.0.1:3306)/golang_playground
+  host: $SERVER_URL
+  username: 'puntodamar'
+  password: 'puntodamar'
+  database: 'golang_playground'
