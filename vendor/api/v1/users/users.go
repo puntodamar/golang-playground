@@ -20,7 +20,7 @@ func List(c *gin.Context) {
 	var users []User
 
 	result := Paginate(Param{
-		DB 		: db.Where("username LIKE ?", "pein"),
+		DB 		: db
 		Page 	: page,
 		Limit 	: limit,
 		Model	: &users,
