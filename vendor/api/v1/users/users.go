@@ -1,25 +1,32 @@
 package users
 
 import (
+
 	"github.com/gin-gonic/gin"
 
-	"fmt"
+	"strconv"
 
+	. "helpers"
 	. "models/v1"
 	. "configs/database"
 )
 
 
 func List(c *gin.Context) {
-	db 		:= Db
+	db 			:= Db
+	page, _ 	:= strconv.Atoi(c.DefaultQuery("page", "1"))
+	limit, _ 	:= strconv.Atoi(c.DefaultQuery("limit", "30"))
+
 	var users []User
 
-	if err := db.Find(&users).Error; err != nil {
-		c.AbortWithStatus(404)
-		fmt.Println(err)
-	} else {
-		c.JSON(200, users)
-	}
+	result := Paginate(Param{
+		DB 		: db.Where("username LIKE ?", "pein"),
+		Page 	: page,
+		Limit 	: limit,
+		Model	: &users,
+	})
+
+	c.JSON(200, result)
 
 	db.Close()
 }
