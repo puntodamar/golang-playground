@@ -8,10 +8,10 @@ import (
 	"time"
 	"net/http"
 
-	"api/requests/v1/auth"
-	. "configs/database"
-	validation "helpers/validations/model"
-	model "models/v1"
+				"api/requests/v1/auth"
+	. 			"configs/database"
+	validation 	"helpers/validations/model"
+	model 		"models/v1"
 )
 
 func Register(c *gin.Context) {

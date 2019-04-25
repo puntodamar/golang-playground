@@ -2,8 +2,8 @@ package model
 
 import (
 	"github.com/jinzhu/gorm"
-	. "models/v1"
 	"reflect"
+	. "models/v1"
 )
 
 type ReturnValue struct {

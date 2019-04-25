@@ -2,7 +2,6 @@ package v1
 
 import (
 	"time"
-
 )
 
 type User struct {

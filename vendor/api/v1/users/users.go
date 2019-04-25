@@ -1,7 +1,6 @@
 package users
 
 import (
-
 	"github.com/gin-gonic/gin"
 
 	"strconv"
