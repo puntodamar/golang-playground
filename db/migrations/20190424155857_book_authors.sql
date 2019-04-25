@@ -4,8 +4,8 @@
 -- auto-generated definition
 create table book_authors
 (
-    book_id   int null,
-    author_id int auto_increment,
+    book_id   int not null,
+    author_id int not null,
 
     constraint book_authors_authors__fk
         foreign key (author_id) references authors (id),

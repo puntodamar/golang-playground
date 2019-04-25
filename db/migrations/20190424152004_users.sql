@@ -7,9 +7,9 @@ create table users
     name       varchar(150) not null,
     username   varchar(20)  not null,
     email      varchar(100) not null,
+    created_at datetime     null,
     updated_at datetime     null,
     deleted_at datetime     null,
-    created_at datetime     null,
 
     constraint users_email_uindex
         unique (email),

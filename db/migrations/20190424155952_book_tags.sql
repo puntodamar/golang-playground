@@ -4,8 +4,8 @@
 -- auto-generated definition
 create table book_tags
 (
-    book_id int null,
-    tag_id  int null,
+    book_id int not null,
+    tag_id  int not null,
 
     constraint book_tags_books__fk
         foreign key (book_id) references books (id),
