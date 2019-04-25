@@ -2,7 +2,6 @@ package main
 
 import (
 	"configs/routers"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 func main() {
