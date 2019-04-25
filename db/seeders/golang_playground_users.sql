@@ -1,0 +1,1 @@
+insert into golang_playground.users (id, name, username, email, created_at, deleted_at, updated_at) values (1, 'Punto Damar P', 'puntodamar', 'punto.damar@gmail.com', '2019-04-25 07:27:10', null, null);

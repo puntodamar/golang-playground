@@ -1,0 +1,1 @@
+insert into golang_playground.books (id, publisher_id, name, published_at, created_at, updated_at, deleted_at) values (1, 1, 'Harry Potter and the Philosopher''s Stone', '2019-04-25', '2019-04-25 07:41:11', null, null);
