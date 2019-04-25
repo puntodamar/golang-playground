@@ -5,7 +5,7 @@ create table books
 (
     id            int auto_increment,
     publisher_id  int null,
-    name          varchar(200) CHARACTER SET utf8 null,
+    name          varchar(200) CHARACTER SET utf8 not null,
     published_at  date null ,
     created_at    datetime null,
     updated_at    datetime null,

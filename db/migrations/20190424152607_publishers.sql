@@ -4,7 +4,7 @@
 create table publishers
 (
     id int null auto_increment,
-    name varchar(100) null,
+    name varchar(100) not null,
     created_at datetime null,
     updated_at datetime null,
 

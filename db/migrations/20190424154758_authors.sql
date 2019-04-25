@@ -4,7 +4,7 @@
 create table authors
 (
     id      int auto_increment,
-    name    varchar(150) CHARACTER SET utf8 null,
+    name    varchar(150) CHARACTER SET utf8 not null,
 
     constraint authors_pk primary key (id)
 );
