@@ -1,14 +1,11 @@
 package v1
 
-import "github.com/jinzhu/gorm"
-
 type Author struct {
-	gorm.Model
-
 	// has many
 	BookAuthors []BookAuthor
 
 	// columns
-	Name        string	`gorm:"type:varchar(150);not null"`
+	ID			int     `gorm:"primary_key" json:"id"`
+	Name        string	`gorm:"type:varchar(150);not null" json:"name"`
 }
 

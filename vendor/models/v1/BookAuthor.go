@@ -3,10 +3,7 @@ package v1
 type BookAuthor struct {
 
 	// has one
-	BookID		uint
-	AuthorID 	uint
-
-	// columns
-	Name        string	`gorm:"type:varchar(200);not null"`
+	BookID		uint 	`gorm:"type:int(11);not null" json:"book_id"`
+	AuthorID 	uint	`gorm:"type:int(11);not null" json:"author_id"`
 }
 

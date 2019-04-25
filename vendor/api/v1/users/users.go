@@ -5,8 +5,8 @@ import (
 
 	"fmt"
 
+	. "models/v1"
 	. "configs/database"
-	. "models/v1/user"
 )
 
 

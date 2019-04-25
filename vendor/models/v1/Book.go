@@ -1,14 +1,19 @@
 package v1
 
-import "github.com/jinzhu/gorm"
+import "time"
 
 type Book struct {
-	gorm.Model
 
 	// has many
 	BookAuthors []BookAuthor
 	BookTags	[]Tag
 
 	// columns
-	Name	string	`gorm:"type:varchar(200);unique_index;not null"`
+	ID			int     	`gorm:"primary_key" json:"id"`
+	Name		string		`gorm:"type:varchar(200);unique_index;not null" json:"name"`
+
+	CreatedAt	time.Time 	`gorm:"type:datetime;" json:"created_at"`
+	UpdatedAt	time.Time 	`gorm:"type:datetime;" json:"updated_at"`
+	DeletedAt	*time.Time 	`gorm:"type:datetime;" json:"deleted_at"`
+
 }
