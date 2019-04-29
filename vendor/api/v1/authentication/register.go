@@ -21,7 +21,7 @@ func Register(c *gin.Context) {
 	validationErrors 	:= map[string]string{}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, jsonFormatter.FormatJsonErrorFromString(err.Error()))
 		return
 	}
 
@@ -48,8 +48,7 @@ func Register(c *gin.Context) {
 			tx.Rollback()
 			c.JSON(http.StatusUnprocessableEntity,dbc.Error )
 		} else {
-			//tx.Commit()
-			tx.Rollback()
+			tx.Commit()
 			newUser.Password = ""
 			json := jsonFormatter.FormatJsonSuccess("user","create",&newUser)
 			c.JSON(http.StatusOK, &json)
