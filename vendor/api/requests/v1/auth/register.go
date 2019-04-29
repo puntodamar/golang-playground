@@ -1,31 +1,13 @@
 package auth
 
+import (
+	_ "helpers/validator"
+)
+
 type RegisterForm struct {
-	Name 		string `json:"name"`
-	Username  	string `json:"username"`
-	Email		string `json:"email"`
-	Password 	string `json:"password"`
+	Name 		string `json:"name" valid:"required"`
+	Username  	string `json:"username" valid:"required"`
+	Email		string `json:"email" valid:"email"`
+	Password 	string `json:"password" valid:"required,length(6|20)"`
 }
 
-func (v *RegisterForm) Validate(language string) []string {
-
-	errs := []string{}
-
-	if len(v.Name) < 1 {
-		errs = append(errs, "name is required")
-	}
-
-	if len(v.Username) < 1 {
-		errs = append(errs, "username is required")
-	}
-
-	if len(v.Password) < 1 {
-		errs = append(errs, "password is required")
-	}
-
-	if len(v.Email) < 1 {
-		errs = append(errs, "email is required")
-	}
-
-	return errs
-}
