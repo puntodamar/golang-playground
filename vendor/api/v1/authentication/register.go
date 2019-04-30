@@ -20,8 +20,9 @@ func Register(c *gin.Context) {
 	jsonFormatter 		:= &validator.JsonFormatter{}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, jsonFormatter.FormatJsonErrorFromString(err.Error()))
-		return
+		c.AbortWithStatusJSON(
+			http.StatusUnprocessableEntity,
+			jsonFormatter.FormatJsonErrorFromString(err.Error()))
 	}
 
 	hash, _ 	:= HashPassword(req.Password)
@@ -42,8 +43,7 @@ func Register(c *gin.Context) {
 			tx.Rollback()
 			c.JSON(http.StatusUnprocessableEntity,dbc.Error )
 		} else {
-			//tx.Commit()
-			tx.Rollback()
+			tx.Commit()
 			newUser.Password = ""
 			json := jsonFormatter.FormatJsonSuccess("user","create",&newUser)
 			c.JSON(http.StatusOK, &json)

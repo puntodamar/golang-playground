@@ -28,8 +28,9 @@ func Paginate(p Param)  interface{} {
 	var offset 		int
 	var count 		int
 	var paginator 	Paginator
-	done := make(chan bool, 1)
-	db := p.DB
+
+	done 	:= make(chan bool, 1)
+	db 		:= p.DB
 
 	go countRecords(db, p.Model, done, &count)
 

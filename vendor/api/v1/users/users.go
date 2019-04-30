@@ -2,12 +2,11 @@ package users
 
 import (
 	"github.com/gin-gonic/gin"
-
 	"strconv"
-
-	. "helpers"
-	. "models/v1"
-	. "configs/database"
+	."helpers"
+	. 				"models/v1"
+	. 				"configs/database"
+	model_formatter "helpers/formatters/model"
 )
 
 
@@ -25,7 +24,12 @@ func List(c *gin.Context) {
 		Model	: &users,
 	})
 
-	c.JSON(200, result)
+	val := db.Scopes(ListUsers).Find(&model_formatter.User{}).Value
 
-	db.Close()
+	c.JSON(200, val)
+}
+
+func Login(c *gin.Context) {
+
+
 }

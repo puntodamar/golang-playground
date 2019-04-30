@@ -3,10 +3,10 @@ package auth
 import (
 	"github.com/jinzhu/gorm"
 
-	. 					"helpers/validator/error_formats"
-	global_validator 	"helpers/validator/global"
-	model_validator 	"helpers/validator/model"
-	model 				"models/v1"
+	. "helpers/validator/error_formats"
+	global_validator "helpers/validator/global"
+	model_validator "helpers/validator/model"
+	model "models/v1"
 )
 
 type RegisterForm struct {
