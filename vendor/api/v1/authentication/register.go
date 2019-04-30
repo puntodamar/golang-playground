@@ -1,34 +1,27 @@
 package authentication
 
 import (
-	"api/requests/v1/auth"
-	. "configs/database"
-	"github.com/asaskevich/govalidator"
+
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
-	"helpers/validator"
-	model_validator "helpers/validator/model"
-	model "models/v1"
+
 	"net/http"
+
+	"helpers/validator"
+	. "configs/database"
+	model 				"models/v1"
+	request_validator "helpers/validator/requests/v1/auth"
 )
 
 
 func Register(c *gin.Context) {
 	db 					:= Db
-	req 				:= &auth.RegisterForm{}
+	req 				:= &request_validator.RegisterForm{}
 	jsonFormatter 		:= &validator.JsonFormatter{}
-	validationErrors 	:= map[string]string{}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, jsonFormatter.FormatJsonErrorFromString(err.Error()))
 		return
-	}
-
-	_, err := govalidator.ValidateStruct(req)
-	if err != nil {
-		json 				:= jsonFormatter.FormatJsonErrorFromString(err.Error())
-		validationErrors 	= json
 	}
 
 	hash, _ 	:= HashPassword(req.Password)
@@ -40,7 +33,8 @@ func Register(c *gin.Context) {
 	}
 
 
-	var ok, msg = validRegistration(db, &newUser)
+	var ok, err = req.Validate(db, &newUser)
+
 	if ok {
 		tx := db.Begin()
 
@@ -48,17 +42,15 @@ func Register(c *gin.Context) {
 			tx.Rollback()
 			c.JSON(http.StatusUnprocessableEntity,dbc.Error )
 		} else {
-			tx.Commit()
+			//tx.Commit()
+			tx.Rollback()
 			newUser.Password = ""
 			json := jsonFormatter.FormatJsonSuccess("user","create",&newUser)
 			c.JSON(http.StatusOK, &json)
 
 		}
 	} else {
-		for k , e := range msg {
-			validationErrors[k] = e
-		}
-		c.JSON(http.StatusOK,jsonFormatter.FormatJsonErrorFromMap(validationErrors))
+		c.JSON(http.StatusUnprocessableEntity, err)
 	}
 
 }
@@ -71,23 +63,4 @@ func HashPassword(password string) (string, error) {
 func CheckPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
-}
-
-////////////////////////////
-// PRIVATE
-///////////////////////////
-
-func validRegistration(db *gorm.DB,req *model.User) (bool, map[string]string){
-	qe := map[string]string{}
-
-	if model_validator.Exists(db, model.User{}, "username", req.Username){
-		qe["username"] = model_validator.DataExists("username")
-	}
-
-	if(len(qe) > 0){
-		return false,qe
-	} else {
-		return true,qe
-	}
-
 }

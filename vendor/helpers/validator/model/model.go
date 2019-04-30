@@ -2,15 +2,16 @@ package model
 
 import (
 	"github.com/jinzhu/gorm"
-	"reflect"
 	. "models/v1"
+
+	"reflect"
 )
 
 type ReturnValue struct {
 	Model interface{}
 }
 
-func Exists(db *gorm.DB, model interface{}, column string, value string) bool {
+func Exists(db *gorm.DB, model interface{}, column string, value string) (bool, string) {
 	var data = ReturnValue{Model: model}
 	var count int
 
@@ -23,8 +24,9 @@ func Exists(db *gorm.DB, model interface{}, column string, value string) bool {
 	}
 
 	if count == 0{
-		return false
+		return false, ""
 	}
-	return true
+	return true, column + " is already exists"
 }
+
 
