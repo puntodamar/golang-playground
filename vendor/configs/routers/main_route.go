@@ -1,16 +1,21 @@
 package routers
 
 import (
-	"github.com/gin-gonic/gin"
-
 	"configs/routers/v1/auth"
 	"configs/routers/v1/users"
+	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"gopkg.in/go-playground/validator.v8"
 )
 
 func GetRouters() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+
+	if _, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		//v.RegisterValidation("bookabledate", bookableDate)
+	}
 
 	auth.Routes(r)
 	users.Routes(r)

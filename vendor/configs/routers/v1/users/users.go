@@ -9,6 +9,5 @@ func Routes(route *gin.Engine) {
 	u := route.Group("/api/v1/users")
 	{
 		u.GET("/", 		users.List)
-		u.POST("/login", 	users.Login)
 	}
 }

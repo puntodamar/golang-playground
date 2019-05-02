@@ -7,16 +7,16 @@ import (
 
 	"net/http"
 
-	"helpers/validator"
-	. "configs/database"
-	model 				"models/v1"
-	request_validator "helpers/validator/requests/v1/auth"
+					"helpers/validator"
+	. 				"configs/database"
+	model 			"models/v1"
+	auth_validator 	"helpers/validator/requests/v1/auth"
 )
 
 
 func Register(c *gin.Context) {
 	db 					:= Db
-	req 				:= &request_validator.RegisterForm{}
+	req 				:= &auth_validator.RegisterForm{}
 	jsonFormatter 		:= &validator.JsonFormatter{}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -26,18 +26,21 @@ func Register(c *gin.Context) {
 	}
 
 	hash, _ 	:= HashPassword(req.Password)
-	newUser 	:= model.User{
-		Name		: req.Name,
-		Username	: req.Username,
-		Email		: req.Email,
-		Password	: hash,
-	}
+
+	req.Password = hash
 
 
-	var ok, err = req.Validate(db, &newUser)
+	var ok, err = req.Validate(db)
 
 	if ok {
+
 		tx := db.Begin()
+		newUser 	:= model.User{
+			Name		: req.Name,
+			Username	: req.Username,
+			Email		: req.Email,
+			Password	: req.Password,
+		}
 
 		if dbc := tx.Create(&newUser); dbc.Error != nil {
 			tx.Rollback()

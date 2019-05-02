@@ -6,6 +6,7 @@ import (
 )
 
 func Routes(route *gin.Engine){
+
 	a := route.Group("/api/v1/auth")
 	{
 		a.POST("/login", 		authentication.Login)

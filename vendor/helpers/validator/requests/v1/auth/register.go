@@ -1,8 +1,8 @@
 package auth
 
 import (
+	"fmt"
 	"github.com/jinzhu/gorm"
-
 	. "helpers/validator/error_formats"
 	global_validator "helpers/validator/global"
 	model_validator "helpers/validator/model"
@@ -10,28 +10,30 @@ import (
 )
 
 type RegisterForm struct {
-	Name 		string `json:"name" validate:"required"`
-	Username  	string `json:"username" validate:"required"`
-	Email		string `json:"email" validate:"required,email"`
-	Password 	string `json:"password" validate:"required"`
+	Name 		string `json:"name"`
+	Username  	string `json:"username"`
+	Email		string `json:"email"`
+	Password 	string `json:"password"`
 }
 
 
-func (v *RegisterForm) Validate(db *gorm.DB, user *model.User) (bool, map[string][]ErrorFormat){
+func (v *RegisterForm) Validate(db *gorm.DB) (bool, map[string][]ErrorFormat){
 
-	qe := map[string][]ErrorFormat{
-		"errors" : {
-			ErrorFormat{
-				Field	: "username",
-				Messages: validateUsername(db, user.Username)},
+	qe := map[string][]ErrorFormat{}
+	vu := validateUsername(db, v.Username)
+	ve := validateEmail(db, v.Email)
 
-			ErrorFormat{
-				Field	: "email",
-				Messages: 	validateEmail(db, user.Email)},
-		},
+	fmt.Println(len(vu))
+	if len(vu) > 0 {
+		qe["errors"] = append(qe["errors"], ErrorFormat{
+			Field: "username", Messages: vu})
 	}
 
-	if(len(qe) > 0){
+	if len(ve) > 0 {
+		qe["errors"] = append(qe["errors"], ErrorFormat{
+			Field: "username", Messages: ve})
+	}
+	if(len(qe["errors"]) > 0){
 		return false, qe
 	} else {
 		return true, qe
@@ -48,7 +50,7 @@ func validateUsername(db *gorm.DB, username string) []interface{}{
 	}
 
 	// username exists
-	if stat, msg := model_validator.Exists(db, model.User{}, "username", username); stat == true{
+	if stat, msg := model_validator.Exists(db, &model.User{}, "username", username); stat == true{
 		e = append(e, msg)
 	}
 
@@ -70,12 +72,12 @@ func validateEmail(db *gorm.DB, email string) []interface{}{
 	}
 
 	// email valid
-	if stat, msg := global_validator.ValidEmail(email); stat == true{
+	if stat, msg := global_validator.ValidEmail(email); stat == false {
 		e = append(e, msg)
 	}
 
 	// email exists
-	if stat, msg := model_validator.Exists(db, model.User{}, "email", email); stat == true{
+	if stat, msg := model_validator.Exists(db, &model.User{}, "email", email); stat == true{
 		e = append(e, msg)
 	}
 
