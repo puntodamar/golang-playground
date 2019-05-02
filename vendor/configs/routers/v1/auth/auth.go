@@ -11,5 +11,6 @@ func Routes(route *gin.Engine){
 	{
 		a.POST("/login", 		authentication.Login)
 		a.POST("/register", 	authentication.Register)
+		a.GET("/welcome", authentication.Welcome)
 	}
 }

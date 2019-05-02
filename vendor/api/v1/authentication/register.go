@@ -3,7 +3,6 @@ package authentication
 import (
 
 	"github.com/gin-gonic/gin"
-	"golang.org/x/crypto/bcrypt"
 
 	"net/http"
 
@@ -11,6 +10,7 @@ import (
 	. 				"configs/database"
 	model 			"models/v1"
 	auth_validator 	"helpers/validator/requests/v1/auth"
+	global_helper 	"helpers/global"
 )
 
 
@@ -25,7 +25,7 @@ func Register(c *gin.Context) {
 			jsonFormatter.FormatJsonErrorFromString(err.Error()))
 	}
 
-	hash, _ 	:= HashPassword(req.Password)
+	hash, _ 	:= global_helper.HashPassword(req.Password)
 
 	req.Password = hash
 
@@ -58,12 +58,5 @@ func Register(c *gin.Context) {
 
 }
 
-func HashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
-	return string(bytes), err
-}
 
-func CheckPasswordHash(password, hash string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-	return err == nil
-}
+

@@ -5,7 +5,7 @@ import (
 	"configs/routers/v1/users"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"gopkg.in/go-playground/validator.v8"
+	"gopkg.in/go-playground/validator.v9"
 )
 
 func GetRouters() *gin.Engine {
