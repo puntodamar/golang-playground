@@ -20,7 +20,7 @@ func List(c *gin.Context) {
 	authors 	:= Paginate(Param{
 		DB 		:
 			db.
-			Scopes(model.Author{}.ListOfAuthorsComplete).
+			Scopes(model.Author{}.CompleteList).
 			Preload("Books.Tags"),
 		Page 	: page,
 		Limit 	: limit,

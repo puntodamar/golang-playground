@@ -3,13 +3,12 @@ package users
 import (
 	"github.com/gin-gonic/gin"
 
-
 	"strconv"
 
-	. "models/v1"
-	. "helpers"
 	. "configs/database"
+	. "helpers"
 	model_formatter "helpers/formatters/model"
+	model "models/v1"
 )
 
 func List(c *gin.Context) {
@@ -19,7 +18,7 @@ func List(c *gin.Context) {
 
 	formatter 	:= &[]model_formatter.User{}
 	users 		:= Paginate(Param{
-		DB 		: db.Scopes(ListUsers),
+		DB 		: db.Scopes(model.User{}.List),
 		Page 	: page,
 		Limit 	: limit,
 		Model	: &formatter,
