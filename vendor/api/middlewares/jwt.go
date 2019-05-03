@@ -1,4 +1,4 @@
-package v1
+package middlewares
 
 import (
 	"github.com/dgrijalva/jwt-go"
@@ -28,12 +28,16 @@ func JWT() gin.HandlerFunc {
 		})
 
 		if !tkn.Valid {
-			c.AbortWithStatus(http.StatusUnauthorized)
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"message" : "invalid token",
+			})
 
 		}
 		if err != nil {
 			if err == jwt.ErrSignatureInvalid {
-				c.AbortWithStatus(http.StatusUnauthorized)
+				c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+					"message" : "invalid token signature",
+				})
 
 			}
 			c.AbortWithStatus(http.StatusBadRequest)
