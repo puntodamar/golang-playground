@@ -4,12 +4,6 @@ import "time"
 
 type Book struct {
 
-	Authors []Author
-
-	// has many
-	BookAuthors []BookAuthor
-	BookTags	[]Tag
-
 	// columns
 	ID			int     	`gorm:"primary_key" json:"id"`
 	Name		string		`gorm:"type:varchar(200);unique_index;not null" json:"name"`
@@ -18,4 +12,5 @@ type Book struct {
 	UpdatedAt	time.Time 	`gorm:"type:datetime;" json:"updated_at"`
 	DeletedAt	*time.Time 	`gorm:"type:datetime;" json:"deleted_at"`
 
+	Tags []Tag `gorm:"many2many:book_tags" json:"tags"`
 }
