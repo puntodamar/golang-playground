@@ -3,7 +3,10 @@ package authentication
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+
 	"net/http"
+
+	. "api/v1/authentication/struct"
 )
 
 func Welcome(c *gin.Context) {
@@ -27,7 +30,7 @@ func Welcome(c *gin.Context) {
 	// if the token is invalid (if it has expired according to the expiry time we set on sign in),
 	// or if the signature does not match
 	tkn, err := jwt.ParseWithClaims(token, claims, func(token *jwt.Token) (interface{}, error)  {
-		return jwtKey, nil
+		return JwtKey, nil
 	})
 	if !tkn.Valid {
 		c.AbortWithStatus(http.StatusUnauthorized)

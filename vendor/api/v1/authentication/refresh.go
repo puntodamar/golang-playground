@@ -5,6 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"
+
+	. "api/v1/authentication/struct"
 )
 
 func Refresh(c *gin.Context) {
@@ -23,7 +25,7 @@ func Refresh(c *gin.Context) {
 
 	claims := &Claims{}
 	tkn, err := jwt.ParseWithClaims(token, claims, func(token *jwt.Token) (interface{}, error) {
-		return jwtKey, nil
+		return JwtKey, nil
 	})
 	if !tkn.Valid {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message" : "unauthorized access"})
@@ -48,7 +50,7 @@ func Refresh(c *gin.Context) {
 	expirationTime		:= time.Now().Add(5 * time.Minute)
 	claims.ExpiresAt	 = expirationTime.Unix()
 	newToken 			:= jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err 	:= newToken.SignedString(jwtKey)
+	tokenString, err 	:= newToken.SignedString(JwtKey)
 
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)

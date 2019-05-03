@@ -9,7 +9,7 @@ func Routes(route *gin.Engine){
 
 	a := route.Group("/api/v1/auth")
 	{
-		a.POST("/login", 		authentication.Login)
+		a.POST("/auth", 		authentication.Auth)
 		a.POST("/register", 	authentication.Register)
 		a.GET("/welcome", authentication.Welcome)
 	}
