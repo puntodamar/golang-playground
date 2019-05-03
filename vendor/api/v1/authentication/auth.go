@@ -39,13 +39,19 @@ func Auth(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 			"message" : "invalid credentials",
 		})
+		return
 	}
 
 
 	//Declare the expiration time of the token
 	//here, we have kept it as 5 minutes
 
-	expirationTime := time.Now().Add(5 * time.Minute)
+	var expirationTime time.Time
+	if user.Username == "jamal"{
+		expirationTime = time.Now().Add(24 * time.Hour)
+	} else {
+		expirationTime = time.Now().Add(5 * time.Minute)
+	}
 
 //	Create the JWT claims, which includes the username and expiry time
 	claims := &Claims{

@@ -1,23 +1,22 @@
 package authentication
 
 import (
-
 	"github.com/gin-gonic/gin"
+	"helpers/formatters"
 
 	"net/http"
 
-					"helpers/validator"
-	. 				"configs/database"
-	model 			"models/v1"
-	auth_validator 	"helpers/validator/requests/v1/auth"
-	global_helper 	"helpers/global"
+	. "configs/database"
+	global_helper "helpers/global"
+	auth_validator "helpers/validator/requests/v1/auth"
+	model "models/v1"
 )
 
 
 func Register(c *gin.Context) {
 	db 					:= Db
 	req 				:= &auth_validator.RegisterForm{}
-	jsonFormatter 		:= &validator.JsonFormatter{}
+	jsonFormatter 		:= &formatters.JsonFormatter{}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.AbortWithStatusJSON(
