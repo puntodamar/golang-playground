@@ -1,11 +1,13 @@
 package routers
 
 import (
-	"configs/routers/v1/auth"
-	"configs/routers/v1/users"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"gopkg.in/go-playground/validator.v9"
+
+	"configs/routers/v1/auth"
+	"configs/routers/v1/users"
+	"configs/routers/v1/authors"
 )
 
 func GetRouters() *gin.Engine {
@@ -19,6 +21,7 @@ func GetRouters() *gin.Engine {
 
 	auth.Routes(r)
 	users.Routes(r)
+	authors.Routes(r)
 
 	return r
 }

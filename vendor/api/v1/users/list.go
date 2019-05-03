@@ -2,14 +2,14 @@ package users
 
 import (
 	"github.com/gin-gonic/gin"
-	. "configs/database"
-	model_formatter "helpers/formatters/model"
+
+
 	"strconv"
 
-	//"strconv"
-	//."helpers"
 	. "models/v1"
 	. "helpers"
+	. "configs/database"
+	model_formatter "helpers/formatters/model"
 )
 
 func List(c *gin.Context) {
@@ -18,15 +18,12 @@ func List(c *gin.Context) {
 	limit, _ 	:= strconv.Atoi(c.DefaultQuery("limit", "30"))
 
 	formatter 	:= &[]model_formatter.User{}
-	result 		:= Paginate(Param{
+	users 		:= Paginate(Param{
 		DB 		: db.Scopes(ListUsers),
 		Page 	: page,
 		Limit 	: limit,
 		Model	: &formatter,
 	})
 
-
-	//db.Scopes(ListUsers).Find(&result)
-
-	c.JSON(200, gin.H{"data" : result})
+	c.JSON(200, gin.H{"data" : &users})
 }

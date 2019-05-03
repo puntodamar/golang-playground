@@ -4,6 +4,8 @@ import "time"
 
 type Book struct {
 
+	Authors []Author
+
 	// has many
 	BookAuthors []BookAuthor
 	BookTags	[]Tag
