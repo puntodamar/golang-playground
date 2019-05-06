@@ -10,7 +10,7 @@ type Author struct {
 	Books		[]Book `gorm:"many2many:book_authors" json:"books"`
 }
 
-func (Author) CompleteList(db *gorm.DB) *gorm.DB {
+func CompleteAuthorList(db *gorm.DB) *gorm.DB {
 
 	db. Table("authors a").
 		Joins("JOIN book_authors ba 	ON ba.author_id = a.id").

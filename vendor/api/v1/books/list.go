@@ -1,4 +1,4 @@
-package users
+package books
 
 import (
 	"github.com/gin-gonic/gin"
@@ -7,7 +7,6 @@ import (
 
 	. "configs/database"
 	. "helpers"
-	model_formatter "helpers/formatters/model"
 	model "models/v1"
 )
 
@@ -16,13 +15,12 @@ func List(c *gin.Context) {
 	page, _ 	:= strconv.Atoi(c.DefaultQuery("page", "1"))
 	limit, _ 	:= strconv.Atoi(c.DefaultQuery("limit", "30"))
 
-
-	users 		:= Paginate(Param{
-		DB 		: db.Scopes(model.ListUsers),
+	books 		:= Paginate(Param{
+		DB 		: db.Scopes(model.BookList),
 		Page 	: page,
 		Limit 	: limit,
-		Model	: &model_formatter.User{},
+		Model	: &model.Book{},
 	})
 
-	c.JSON(200, gin.H{"data" : &users})
+	c.JSON(200, gin.H{"data" : &books})
 }

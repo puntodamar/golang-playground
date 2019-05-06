@@ -16,15 +16,14 @@ func List(c *gin.Context) {
 	page, _ 	:= strconv.Atoi(c.DefaultQuery("page", "1"))
 	limit, _ 	:= strconv.Atoi(c.DefaultQuery("limit", "30"))
 
-	formatter 	:= &[]model.Author{}
 	authors 	:= Paginate(Param{
 		DB 		:
 			db.
-			Scopes(model.Author{}.CompleteList).
+			Scopes(model.CompleteAuthorList).
 			Preload("Books.Tags"),
 		Page 	: page,
 		Limit 	: limit,
-		Model	: &formatter,
+		Model	: &[]model.Author{},
 	})
 
 	c.JSON(200, gin.H{"data" : &authors})

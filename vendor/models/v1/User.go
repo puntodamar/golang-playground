@@ -18,7 +18,7 @@ type User struct {
 	DeletedAt	*time.Time 	`gorm:"type:datetime;" json:"deleted_at"`
 }
 
-func (User) List(db *gorm.DB) *gorm.DB {
+func ListUsers(db *gorm.DB) *gorm.DB {
 
 	return db.Select("id, name, username, email, created_at, updated_at, deleted_at")
 }
