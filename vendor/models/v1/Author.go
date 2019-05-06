@@ -6,8 +6,7 @@ type Author struct {
 	// columns
 	ID			int     `gorm:"primary_key" json:"id"`
 	Name        string	`gorm:"type:varchar(150);not null" json:"name"`
-
-	Books		[]Book `gorm:"many2many:book_authors" json:"books"`
+	Books		[]Book 	`gorm:"many2many:book_authors" json:"books"`
 }
 
 func CompleteAuthorList(db *gorm.DB) *gorm.DB {

@@ -9,6 +9,7 @@ import (
 	"configs/routers/v1/users"
 	"configs/routers/v1/authors"
 	"configs/routers/v1/books"
+	"configs/routers/v1/seeders"
 )
 
 func GetRouters() *gin.Engine {
@@ -24,6 +25,7 @@ func GetRouters() *gin.Engine {
 	users.Routes(r)
 	authors.Routes(r)
 	books.Routes(r)
+	seeders.Routes(r)
 
 	return r
 }

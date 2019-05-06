@@ -16,8 +16,8 @@ type Book struct {
 	UpdatedAt	time.Time 	`gorm:"type:datetime;" json:"updated_at"`
 	DeletedAt	*time.Time 	`gorm:"type:datetime;" json:"deleted_at"`
 
-
-	Tags []Tag `gorm:"many2many:book_tags" json:"tags"`
+	Publisher 	Publisher
+	Tags 		[]Tag 		`gorm:"many2many:book_tags" json:"tags"`
 }
 
 
