@@ -11,5 +11,6 @@ func Routes(route *gin.Engine) {
 	u := route.Group("/api/v1/users", middlewares.JWT())
 	{
 		u.GET("/", users.List)
+		u.GET("/:id", users.Detail)
 	}
 }
