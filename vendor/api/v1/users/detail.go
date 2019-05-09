@@ -3,7 +3,7 @@ package users
 import (
 	. "configs/database"
 	"github.com/gin-gonic/gin"
-	model_formatter "helpers/formatters/model"
+	model_formatter "helpers/formatters/model/user"
 	"net/http"
 )
 

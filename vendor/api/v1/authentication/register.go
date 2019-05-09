@@ -34,7 +34,7 @@ func Register(c *gin.Context) {
 	if ok {
 
 		tx := db.Begin()
-		newUser 	:= model.User{
+		newUser 	:= &model.User{
 			Name		: req.Name,
 			Username	: req.Username,
 			Email		: req.Email,

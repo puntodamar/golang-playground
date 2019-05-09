@@ -9,6 +9,7 @@ func Routes(route *gin.Engine){
 	a := route.Group("/api/v1/books")
 	{
 		a.GET("/", books.List)
+		a.GET("/:id", books.Detail)
 	}
 }
 

@@ -2,12 +2,12 @@ package users
 
 import (
 	"github.com/gin-gonic/gin"
+	model_formatter "helpers/formatters/model/user"
 
 	"strconv"
 
 	. "configs/database"
 	. "helpers"
-	model_formatter "helpers/formatters/model"
 	model "models/v1"
 )
 
@@ -21,7 +21,7 @@ func List(c *gin.Context) {
 		DB 		: db.Scopes(model.ListUsers),
 		Page 	: page,
 		Limit 	: limit,
-		Model	: &model_formatter.User{},
+		Model	: model_formatter.User{},
 	})
 
 	c.JSON(200, gin.H{"data" : &users})
